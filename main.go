@@ -5,6 +5,8 @@ import (
 	"GoShell/config"
 	"GoShell/format"
 	"errors"
+	"fmt"
+	"io"
 	"os"
 	"strings"
 )
@@ -37,17 +39,34 @@ func InitializeShell() error {
 
 // Returns everything inputs up to and excluding the userInputTerminator
 func GetUserInput() (string, error) {
-	userInput, err := config.GetReader().ReadString(config.UserInputTerminator)
+	userInput := ""
+	for {
+		rune, _, err := config.GetReader().ReadRune()
 
-	if err != nil {
-		return "", err
+		if err != nil {
+			if err == io.EOF {
+				break
+			}
+		} else {
+			runeString := fmt.Sprintf("%c", rune)
+			fmt.Printf("Rune String: {%v}\n", runeString)
+
+			switch runeString {
+			case "\t":
+				TabComplete(userInput)
+			case "\n":
+				break
+			default:
+				userInput += runeString
+			}
+		}
 	}
 
-	if len(userInput) == 1 {
+	if len(userInput) == 0 {
 		return "", nil
 	}
 
-	return userInput[:len(userInput)-1], nil
+	return userInput, nil
 }
 
 func ProcessUserInput(userInput string) error {
@@ -78,4 +97,22 @@ func ProcessUserInput(userInput string) error {
 	}
 
 	return nil
+}
+
+func TabComplete(userInput string) {
+	// searchList := []string{}
+
+	// Look through internal commands, and add those to the list
+	// Sort the list, and autofill
+	for _, element := range config.GetBuiltInCommands() {
+		if strings.HasPrefix(element, userInput) {
+			// Write the remaining to standard out
+			startingIndex := len(userInput)
+			remaining := element[startingIndex:]
+			fmt.Print(remaining)
+			return
+		}
+	}
+	// Look in $PATH, and find all commands starting with userInput
+	return
 }

@@ -7,8 +7,8 @@ import (
 )
 
 const (
-	UserInputTerminator = '\n'
 	UserInputDelimiter  = " "
+	UserInputTerminator = "\n"
 )
 
 var logger *log.Logger
