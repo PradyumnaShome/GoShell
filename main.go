@@ -59,7 +59,7 @@ func ProcessUserInput(userInput string) error {
 
 	command := tokens[0]
 
-	isCommandBuiltIn := IsCommandBuiltIn(command)
+	isCommandBuiltIn := commands.IsCommandBuiltIn(command)
 
 	if isCommandBuiltIn {
 		switch command {
@@ -78,9 +78,4 @@ func ProcessUserInput(userInput string) error {
 	}
 
 	return nil
-}
-
-func IsCommandBuiltIn(command string) bool {
-	_, isCommandBuiltIn := config.GetBuiltInCommands()[command]
-	return isCommandBuiltIn
 }
