@@ -2,16 +2,18 @@
 
 ## Features
 
-1. Should be able to list folders.
+1. Tab completion
 
-2. Tab completion
+2. External commands
 
-3. Background commands
+3. Backgrounded processes
 
 4. Built-in commands
 
+5. Configuration file
 
-### Build-in commands
+
+### Built-in commands
 
 1. `print args`
 
@@ -23,4 +25,4 @@
 
 3.  `exit`
 
-    Exits the shell. As does EOF.
+    Exits the shell. As should EOF.
