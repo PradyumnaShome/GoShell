@@ -2,9 +2,8 @@ package commands
 
 import "GoShell/config"
 
-func IsCommandBuiltIn(command string) (isCommandBuiltIn bool) {
-	_, isCommandBuiltIn = config.GetBuiltInCommands()[command]
-	return
+func IsCommandBuiltIn(command string) bool {
+	return config.Contains(config.GetBuiltInCommands(), command)
 }
 
 func findHelper(directory string, file string) ([]string, error) {

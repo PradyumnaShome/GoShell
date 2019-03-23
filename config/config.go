@@ -20,8 +20,17 @@ func Init() error {
 	return nil
 }
 
-func GetBuiltInCommands() map[string]bool {
-	return map[string]bool{"exit": true, "print": true, "find": true}
+func Contains(slice []string, query string) bool {
+	for _, element := range slice {
+		if element == query {
+			return true
+		}
+	}
+	return false
+}
+
+func GetBuiltInCommands() []string {
+	return []string{"exit", "print", "find"}
 }
 
 func GetLogger() *log.Logger {
